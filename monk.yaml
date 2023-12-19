@@ -1,0 +1,308 @@
+namespace: Telegram-chatgpt-Bot
+
+chatgpt-telegram-bot:
+  defines: runnable
+  metadata:
+    name: chatgpt-telegram-bot
+    description: >-
+      A Telegram bot service that uses OpenAI's APIs for various
+      functionalities.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    chatgpt-telegram-bot:
+      image: env-4355.registry.local/chatgpt-telegram-bot:main-60bf900
+      build: .
+      dockerfile: Dockerfile
+  services: {}
+  connections:
+    openai-api:
+      target: Telegram-chatgpt-Bot/OpenAI API
+      service: '!!!SETME!!!'
+      optional: true
+      description: Connection to OpenAI API for AI functionalities.
+    worldtimeapi:
+      target: Telegram-chatgpt-Bot/WorldTimeAPI
+      service: '!!!SETME!!!'
+      optional: true
+      description: Connection to WorldTimeAPI for time zone information.
+    deepl-api:
+      target: Telegram-chatgpt-Bot/DeepL API
+      service: '!!!SETME!!!'
+      optional: true
+      description: Connection to DeepL API for translation services.
+    thum-io:
+      target: Telegram-chatgpt-Bot/Thum.io
+      service: '!!!SETME!!!'
+      optional: true
+      description: Connection to Thum.io for website screenshot service.
+    open-meteo-api:
+      target: Telegram-chatgpt-Bot/Open-Meteo API
+      service: '!!!SETME!!!'
+      optional: true
+      description: Connection to Open-Meteo API for weather information.
+    coincap-api:
+      target: Telegram-chatgpt-Bot/CoinCap API
+      service: '!!!SETME!!!'
+      optional: true
+      description: Connection to CoinCap API for cryptocurrency rates.
+  variables:
+    openai-model:
+      env: OPENAI_MODEL
+      type: string
+      value: gpt-3.5-turbo
+      description: The model of OpenAI to use.
+    show-usage:
+      env: SHOW_USAGE
+      type: bool
+      value: 'false'
+      description: Flag to show usage information.
+    stream:
+      env: STREAM
+      type: bool
+      value: 'true'
+      description: Flag to enable streaming mode.
+    proxy:
+      env: PROXY
+      type: string
+      value: '!!!SETME!!!'
+      description: Proxy configuration.
+    max-history-size:
+      env: MAX_HISTORY_SIZE
+      type: int
+      value: '15'
+      description: Maximum history size for conversations.
+    max-conversation-age-minutes:
+      env: MAX_CONVERSATION_AGE_MINUTES
+      type: int
+      value: '180'
+      description: Maximum age of a conversation in minutes.
+    assistant-prompt:
+      env: ASSISTANT_PROMPT
+      type: string
+      value: You are a helpful assistant.
+      description: Default prompt for the assistant.
+    max-tokens:
+      env: MAX_TOKENS
+      type: int
+      value: '!!!SETME!!!'
+      description: Maximum number of tokens per response.
+    n-choices:
+      env: N_CHOICES
+      type: int
+      value: '1'
+      description: Number of choices to provide.
+    temperature:
+      env: TEMPERATURE
+      type: float
+      value: '1.0'
+      description: Temperature for randomness in responses.
+    image-model:
+      env: IMAGE_MODEL
+      type: string
+      value: dall-e-2
+      description: Model used for image generation.
+    image-quality:
+      env: IMAGE_QUALITY
+      type: string
+      value: standard
+      description: Quality of generated images.
+    image-style:
+      env: IMAGE_STYLE
+      type: string
+      value: vivid
+      description: Style of generated images.
+    image-size:
+      env: IMAGE_SIZE
+      type: string
+      value: 512x512
+      description: Size of generated images.
+    enable-functions:
+      env: ENABLE_FUNCTIONS
+      type: bool
+      value: '!!!SETME!!!'
+      description: Flag to enable additional functions.
+    functions-max-consecutive-calls:
+      env: FUNCTIONS_MAX_CONSECUTIVE_CALLS
+      type: int
+      value: '10'
+      description: Maximum consecutive function calls.
+    presence-penalty:
+      env: PRESENCE_PENALTY
+      type: float
+      value: '0.0'
+      description: Presence penalty for the AI.
+    frequency-penalty:
+      env: FREQUENCY_PENALTY
+      type: float
+      value: '0.0'
+      description: Frequency penalty for the AI.
+    bot-language:
+      env: BOT_LANGUAGE
+      type: string
+      value: en
+      description: Language of the bot.
+    show-plugins-used:
+      env: SHOW_PLUGINS_USED
+      type: bool
+      value: 'false'
+      description: Flag to show plugins used.
+    whisper-prompt:
+      env: WHISPER_PROMPT
+      type: string
+      value: '!!!SETME!!!'
+      description: Prompt for whisper mode.
+    tts-model:
+      env: TTS_MODEL
+      type: string
+      value: tts-1
+      description: Model used for text-to-speech.
+    tts-voice:
+      env: TTS_VOICE
+      type: string
+      value: alloy
+      description: Voice used for text-to-speech.
+    monthly-user-budgets:
+      env: MONTHLY_USER_BUDGETS
+      type: string
+      value: '!!!SETME!!!'
+      description: Monthly budgets for users.
+    monthly-guest-budget:
+      env: MONTHLY_GUEST_BUDGET
+      type: string
+      value: '!!!SETME!!!'
+      description: Monthly budget for guests.
+    admin-user-ids:
+      env: ADMIN_USER_IDS
+      type: string
+      value: '-'
+      description: IDs of admin users.
+    allowed-telegram-user-ids:
+      env: ALLOWED_TELEGRAM_USER_IDS
+      type: string
+      value: '*'
+      description: Allowed Telegram user IDs.
+    enable-quoting:
+      env: ENABLE_QUOTING
+      type: bool
+      value: 'true'
+      description: Flag to enable quoting.
+    enable-image-generation:
+      env: ENABLE_IMAGE_GENERATION
+      type: bool
+      value: 'true'
+      description: Flag to enable image generation.
+    enable-transcription:
+      env: ENABLE_TRANSCRIPTION
+      type: bool
+      value: 'true'
+      description: Flag to enable transcription.
+    enable-tts-generation:
+      env: ENABLE_TTS_GENERATION
+      type: bool
+      value: 'true'
+      description: Flag to enable text-to-speech generation.
+    budget-period:
+      env: BUDGET_PERIOD
+      type: string
+      value: monthly
+      description: Budget period.
+    user-budgets:
+      env: USER_BUDGETS
+      type: string
+      value: '*'
+      description: User budgets.
+    guest-budget:
+      env: GUEST_BUDGET
+      type: float
+      value: '100.0'
+      description: Budget for guests.
+    voice-reply-with-transcript-only:
+      env: VOICE_REPLY_WITH_TRANSCRIPT_ONLY
+      type: bool
+      value: 'false'
+      description: Flag to reply with transcript only in voice replies.
+    voice-reply-prompts:
+      env: VOICE_REPLY_PROMPTS
+      type: string
+      value: '!!!SETME!!!'
+      description: Prompts for voice replies.
+    ignore-group-transcriptions:
+      env: IGNORE_GROUP_TRANSCRIPTIONS
+      type: bool
+      value: 'true'
+      description: Flag to ignore group transcriptions.
+    group-trigger-keyword:
+      env: GROUP_TRIGGER_KEYWORD
+      type: string
+      value: '!!!SETME!!!'
+      description: Keyword to trigger bot in groups.
+    token-price:
+      env: TOKEN_PRICE
+      type: float
+      value: '0.002'
+      description: Price per token.
+    image-prices:
+      env: IMAGE_PRICES
+      type: string
+      value: 0.016,0.018,0.02
+      description: Prices for image generation.
+    image-format:
+      env: IMAGE_FORMAT
+      type: string
+      value: photo
+      description: Format for receiving images.
+    tts-prices:
+      env: TTS_PRICES
+      type: string
+      value: 0.015,0.030
+      description: Prices for text-to-speech.
+    transcription-price:
+      env: TRANSCRIPTION_PRICE
+      type: float
+      value: '0.006'
+      description: Price for transcription.
+    plugins:
+      env: PLUGINS
+      type: string
+      value: '!!!SETME!!!'
+      description: List of plugins used.
+    worldtime-default-timezone:
+      env: WORLDTIME_DEFAULT_TIMEZONE
+      type: string
+      value: '!!!SETME!!!'
+      description: Default timezone for worldtime plugin.
+    deepl-api-key:
+      env: DEEPL_API_KEY
+      type: string
+      value: '!!!SETME!!!'
+      description: API key for DeepL plugin.
+    duckduckgo-safesearch:
+      env: DUCKDUCKGO_SAFESEARCH
+      type: string
+      value: moderate
+      description: Safe search setting for DuckDuckGo plugins.
+    spotify-client-id:
+      env: SPOTIFY_CLIENT_ID
+      type: string
+      value: '!!!SETME!!!'
+      description: Client ID for Spotify plugin.
+    spotify-client-secret:
+      env: SPOTIFY_CLIENT_SECRET
+      type: string
+      value: '!!!SETME!!!'
+      description: Client secret for Spotify plugin.
+    spotify-redirect-uri:
+      env: SPOTIFY_REDIRECT_URI
+      type: string
+      value: '!!!SETME!!!'
+      description: Redirect URI for Spotify plugin.
+    wolfram-app-id:
+      env: WOLFRAM_APP_ID
+      type: string
+      value: '!!!SETME!!!'
+      description: App ID for Wolfram Alpha plugin.
+
+stack:
+  defines: group
+  members:
+    - Telegram-chatgpt-Bot/chatgpt-telegram-bot
